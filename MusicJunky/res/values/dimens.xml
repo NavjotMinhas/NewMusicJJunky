@@ -1,0 +1,7 @@
+<resources>
+
+    <dimen name="album_art_list_item_width">70dp</dimen>
+	<dimen name="album_art_list_item_height">70dp</dimen>
+     
+</resources>
+
