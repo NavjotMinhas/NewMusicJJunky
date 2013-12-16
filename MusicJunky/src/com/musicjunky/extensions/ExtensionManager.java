@@ -19,7 +19,7 @@ import android.text.TextUtils;
 public class ExtensionManager {
 
 	private Context mApplicationcontext;
-	private List<Extension> allActiveExtensions=new ArrayList<Extension>();
+	private List<ComponentName> allActiveExtensions=new ArrayList<ComponentName>();
 	private Map<ComponentName, Extension> mActiveExtension=new HashMap<ComponentName,Extension>();
 	private SharedPreferences pluginConfig;
 
@@ -42,7 +42,12 @@ public class ExtensionManager {
 	private ExtensionManager(Context context) {
 		this.mApplicationcontext = context.getApplicationContext();
 		this.pluginConfig = this.mApplicationcontext.getSharedPreferences("pluginConfig", 0);
+		this.pluginConfig.edit().clear().commit();
+		for(Extension ext:getInstalledExtensions()){
+			addExtension(ext.componentName);
+		}
 		loadActiveExtension();
+		
 	}
 	
 	public void loadActiveExtension(){
@@ -56,7 +61,10 @@ public class ExtensionManager {
 				intent.setComponent(componentName);
 				ResolveInfo resolveInfo=mApplicationcontext.getPackageManager().resolveService(intent, 0);
 				Extension extension=new Extension(resolveInfo, mApplicationcontext.getPackageManager());
-				allActiveExtensions.add(extension);
+				if(!allActiveExtensions.contains(extension.componentName)){
+					allActiveExtensions.add(componentName);
+					mActiveExtension.put(componentName, extension);
+				}
 			}
 		}
 	}
@@ -142,6 +150,14 @@ public class ExtensionManager {
 		}
 		return extensions;
 	}
+	
+	public Map<ComponentName, Extension> getActiveExtension() {
+		return mActiveExtension;
+	}
+	
+	public List<ComponentName> getAllActiveExtensions() {
+		return allActiveExtensions;
+	}
 
 	public static class Extension {
 		public String title;
@@ -165,14 +181,13 @@ public class ExtensionManager {
 			
 			Bundle metaData = resolveInfo.serviceInfo.metaData;
 			if (metaData != null) {
-				description = metaData.getString("description",
-						"");
+				description = metaData.getString("description");
 				protocoolVersion = metaData
 						.getInt("protocool_version",0);
 				requiresMenuTab = metaData.getBoolean(
 						"requires_menu_tab", false);
 				String settingsActivityFlattenedName = metaData.getString(
-						"settingsActivity", "");
+						"settingsActivity");
 				if (!TextUtils.isEmpty(settingsActivityFlattenedName)) {
 					settingsActivity = ComponentName
 							.unflattenFromString(resolveInfo.serviceInfo.packageName

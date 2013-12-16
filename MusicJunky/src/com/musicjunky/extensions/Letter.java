@@ -14,40 +14,26 @@
  * limitations under the License.
  */
 
-package com.musicjunky;
+package com.musicjunky.extensions;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-import android.content.pm.ActivityInfo;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.StrictMode;
-import android.util.AttributeSet;
-import android.util.Log;
-
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Set;
 
 /**
  * An intent is an abstract description of an operation to be performed.  It
- * can be used with {@link Context#startActivity(Intent) startActivity} to
+ * can be used with {@link Context#startActivity(Letter) startActivity} to
  * launch an {@link android.app.Activity},
- * {@link android.content.Context#sendBroadcast(Intent) broadcastIntent} to
+ * {@link android.content.Context#sendBroadcast(Letter) broadcastIntent} to
  * send it to any interested {@link BroadcastReceiver BroadcastReceiver} components,
  * and {@link android.content.Context#startService} or
  * {@link android.content.Context#bindService} to communicate with a
@@ -590,12 +576,14 @@ import java.util.Set;
  * {@link #setFlags} and {@link #addFlags}.  See {@link #setFlags} for a list
  * of all possible flags.
  */
-public class Intent implements Parcelable, Cloneable {
+public class Letter implements Parcelable, Cloneable {
 
 
     // ---------------------------------------------------------------------
 
     private String mAction;
+	private String mSender;
+	private String mFrom;
     private Bundle mExtras;
     
 
@@ -604,7 +592,12 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * Create an empty intent.
      */
-    public Intent() {
+    public Letter() {
+    }
+    
+    public Letter(String sender, String from){
+    	setSender(sender);
+    	setFrom(from);
     }
 
     /**
@@ -617,8 +610,10 @@ public class Intent implements Parcelable, Cloneable {
      *
      * @param action The Intent action, such as ACTION_VIEW.
      */
-    public Intent(String action) {
-        setAction(action);
+    public Letter(String sender, String from, String action) {
+    	setSender(sender);
+    	setFrom(from);
+    	setAction(action);
     }
 
     /**
@@ -1148,11 +1143,21 @@ public class Intent implements Parcelable, Cloneable {
      *
      * @see #getAction
      */
-    public Intent setAction(String action) {
+    public Letter setAction(String action) {
         mAction = action != null ? action.intern() : null;
         return this;
     }
 
+    public Letter setSender(String sender) {
+        mSender = sender != null ? sender.intern() : null;
+        return this;
+    }
+    
+    public Letter setFrom(String from) {
+        mFrom = from != null ? from.intern() : null;
+        return this;
+    }
+    
     /**
      * Add extended data to the intent.  The name must include a package
      * prefix, for example the app com.android.contacts would use names
@@ -1168,7 +1173,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getBooleanExtra(String, boolean)
      */
-    public Intent putExtra(String name, boolean value) {
+    public Letter putExtra(String name, boolean value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1191,7 +1196,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getByteExtra(String, byte)
      */
-    public Intent putExtra(String name, byte value) {
+    public Letter putExtra(String name, byte value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1214,7 +1219,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getCharExtra(String, char)
      */
-    public Intent putExtra(String name, char value) {
+    public Letter putExtra(String name, char value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1237,7 +1242,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getShortExtra(String, short)
      */
-    public Intent putExtra(String name, short value) {
+    public Letter putExtra(String name, short value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1260,7 +1265,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getIntExtra(String, int)
      */
-    public Intent putExtra(String name, int value) {
+    public Letter putExtra(String name, int value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1283,7 +1288,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getLongExtra(String, long)
      */
-    public Intent putExtra(String name, long value) {
+    public Letter putExtra(String name, long value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1306,7 +1311,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getFloatExtra(String, float)
      */
-    public Intent putExtra(String name, float value) {
+    public Letter putExtra(String name, float value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1329,7 +1334,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getDoubleExtra(String, double)
      */
-    public Intent putExtra(String name, double value) {
+    public Letter putExtra(String name, double value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1352,7 +1357,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getStringExtra(String)
      */
-    public Intent putExtra(String name, String value) {
+    public Letter putExtra(String name, String value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1375,7 +1380,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getCharSequenceExtra(String)
      */
-    public Intent putExtra(String name, CharSequence value) {
+    public Letter putExtra(String name, CharSequence value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1398,7 +1403,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getParcelableExtra(String)
      */
-    public Intent putExtra(String name, Parcelable value) {
+    public Letter putExtra(String name, Parcelable value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1421,7 +1426,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getParcelableArrayExtra(String)
      */
-    public Intent putExtra(String name, Parcelable[] value) {
+    public Letter putExtra(String name, Parcelable[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1444,7 +1449,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getParcelableArrayListExtra(String)
      */
-    public Intent putParcelableArrayListExtra(String name, ArrayList<? extends Parcelable> value) {
+    public Letter putParcelableArrayListExtra(String name, ArrayList<? extends Parcelable> value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1467,7 +1472,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getIntegerArrayListExtra(String)
      */
-    public Intent putIntegerArrayListExtra(String name, ArrayList<Integer> value) {
+    public Letter putIntegerArrayListExtra(String name, ArrayList<Integer> value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1490,7 +1495,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getStringArrayListExtra(String)
      */
-    public Intent putStringArrayListExtra(String name, ArrayList<String> value) {
+    public Letter putStringArrayListExtra(String name, ArrayList<String> value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1513,7 +1518,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getCharSequenceArrayListExtra(String)
      */
-    public Intent putCharSequenceArrayListExtra(String name, ArrayList<CharSequence> value) {
+    public Letter putCharSequenceArrayListExtra(String name, ArrayList<CharSequence> value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1536,7 +1541,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getSerializableExtra(String)
      */
-    public Intent putExtra(String name, Serializable value) {
+    public Letter putExtra(String name, Serializable value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1559,7 +1564,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getBooleanArrayExtra(String)
      */
-    public Intent putExtra(String name, boolean[] value) {
+    public Letter putExtra(String name, boolean[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1582,7 +1587,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getByteArrayExtra(String)
      */
-    public Intent putExtra(String name, byte[] value) {
+    public Letter putExtra(String name, byte[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1605,7 +1610,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getShortArrayExtra(String)
      */
-    public Intent putExtra(String name, short[] value) {
+    public Letter putExtra(String name, short[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1628,7 +1633,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getCharArrayExtra(String)
      */
-    public Intent putExtra(String name, char[] value) {
+    public Letter putExtra(String name, char[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1651,7 +1656,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getIntArrayExtra(String)
      */
-    public Intent putExtra(String name, int[] value) {
+    public Letter putExtra(String name, int[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1674,7 +1679,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getLongArrayExtra(String)
      */
-    public Intent putExtra(String name, long[] value) {
+    public Letter putExtra(String name, long[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1697,7 +1702,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getFloatArrayExtra(String)
      */
-    public Intent putExtra(String name, float[] value) {
+    public Letter putExtra(String name, float[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1720,7 +1725,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getDoubleArrayExtra(String)
      */
-    public Intent putExtra(String name, double[] value) {
+    public Letter putExtra(String name, double[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1743,7 +1748,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getStringArrayExtra(String)
      */
-    public Intent putExtra(String name, String[] value) {
+    public Letter putExtra(String name, String[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1766,7 +1771,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getCharSequenceArrayExtra(String)
      */
-    public Intent putExtra(String name, CharSequence[] value) {
+    public Letter putExtra(String name, CharSequence[] value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1789,7 +1794,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #removeExtra
      * @see #getBundleExtra(String)
      */
-    public Intent putExtra(String name, Bundle value) {
+    public Letter putExtra(String name, Bundle value) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1804,7 +1809,7 @@ public class Intent implements Parcelable, Cloneable {
      *
      * @see #putExtra
      */
-    public Intent putExtras(Intent src) {
+    public Letter putExtras(Letter src) {
         if (src.mExtras != null) {
             if (mExtras == null) {
                 mExtras = new Bundle(src.mExtras);
@@ -1825,7 +1830,7 @@ public class Intent implements Parcelable, Cloneable {
      * @see #putExtra
      * @see #removeExtra
      */
-    public Intent putExtras(Bundle extras) {
+    public Letter putExtras(Bundle extras) {
         if (mExtras == null) {
             mExtras = new Bundle();
         }
@@ -1840,7 +1845,7 @@ public class Intent implements Parcelable, Cloneable {
      * @param extras The new set of extras in the Intent, or null to erase
      * all extras.
      */
-    public Intent replaceExtras(Bundle extras) {
+    public Letter replaceExtras(Bundle extras) {
         mExtras = extras != null ? new Bundle(extras) : null;
         return this;
     }
@@ -1859,94 +1864,7 @@ public class Intent implements Parcelable, Cloneable {
         }
     }
 
-    /**
-     * Use with {@link #fillIn} to allow the current action value to be
-     * overwritten, even if it is already set.
-     */
-    public static final int FILL_IN_ACTION = 1<<0;
 
-    /**
-     * Use with {@link #fillIn} to allow the current data or type value
-     * overwritten, even if it is already set.
-     */
-    public static final int FILL_IN_DATA = 1<<1;
-
-    /**
-     * Use with {@link #fillIn} to allow the current categories to be
-     * overwritten, even if they are already set.
-     */
-    public static final int FILL_IN_CATEGORIES = 1<<2;
-
-    /**
-     * Use with {@link #fillIn} to allow the current component value to be
-     * overwritten, even if it is already set.
-     */
-    public static final int FILL_IN_COMPONENT = 1<<3;
-
-    /**
-     * Use with {@link #fillIn} to allow the current package value to be
-     * overwritten, even if it is already set.
-     */
-    public static final int FILL_IN_PACKAGE = 1<<4;
-
-    /**
-     * Use with {@link #fillIn} to allow the current bounds rectangle to be
-     * overwritten, even if it is already set.
-     */
-    public static final int FILL_IN_SOURCE_BOUNDS = 1<<5;
-
-    /**
-     * Use with {@link #fillIn} to allow the current selector to be
-     * overwritten, even if it is already set.
-     */
-    public static final int FILL_IN_SELECTOR = 1<<6;
-
-    /**
-     * Use with {@link #fillIn} to allow the current ClipData to be
-     * overwritten, even if it is already set.
-     */
-    public static final int FILL_IN_CLIP_DATA = 1<<7;
-
-    /**
-     * Wrapper class holding an Intent and implementing comparisons on it for
-     * the purpose of filtering.  The class implements its
-     * {@link #equals equals()} and {@link #hashCode hashCode()} methods as
-     * simple calls to {@link Intent#filterEquals(Intent)}  filterEquals()} and
-     * {@link android.content.Intent#filterHashCode()}  filterHashCode()}
-     * on the wrapped Intent.
-     */
-    public static final class FilterComparison {
-        private final Intent mIntent;
-        private final int mHashCode;
-
-        public FilterComparison(Intent intent) {
-            mIntent = intent;
-            mHashCode = intent.filterHashCode();
-        }
-
-        /**
-         * Return the Intent that this FilterComparison represents.
-         * @return Returns the Intent held by the FilterComparison.  Do
-         * not modify!
-         */
-        public Intent getIntent() {
-            return mIntent;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof FilterComparison) {
-                Intent other = ((FilterComparison)obj).mIntent;
-                return mIntent.filterEquals(other);
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            return mHashCode;
-        }
-    }
 
     @Override
     public String toString() {
@@ -1965,17 +1883,6 @@ public class Intent implements Parcelable, Cloneable {
 
         b.append("Letter { ");
         toShortString(b, false, true, true, false);
-        b.append(" }");
-
-        return b.toString();
-    }
-
-    /** @hide */
-    public String toInsecureStringWithClip() {
-        StringBuilder b = new StringBuilder(128);
-
-        b.append("Intent { ");
-        toShortString(b, false, true, true, true);
         b.append(" }");
 
         return b.toString();
@@ -2015,18 +1922,18 @@ public class Intent implements Parcelable, Cloneable {
         out.writeBundle(mExtras);
     }
 
-    public static final Parcelable.Creator<Intent> CREATOR
-            = new Parcelable.Creator<Intent>() {
-        public Intent createFromParcel(Parcel in) {
-            return new Intent(in);
+    public static final Parcelable.Creator<Letter> CREATOR
+            = new Parcelable.Creator<Letter>() {
+        public Letter createFromParcel(Parcel in) {
+            return new Letter(in);
         }
-        public Intent[] newArray(int size) {
-            return new Intent[size];
+        public Letter[] newArray(int size) {
+            return new Letter[size];
         }
     };
 
     /** @hide */
-    protected Intent(Parcel in) {
+    protected Letter(Parcel in) {
         readFromParcel(in);
     }
 
