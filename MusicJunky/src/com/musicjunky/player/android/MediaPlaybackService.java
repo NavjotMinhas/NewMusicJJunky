@@ -1953,7 +1953,7 @@ public class MediaPlaybackService extends Service {
         }
 
         public void start() {
-            Log.e(TAG,"Exception",new Exception("MultiPlayer.start called"));
+            //Log.e(TAG,"Exception",new Exception("MultiPlayer.start called"));
             mCurrentMediaPlayer.start();
         }
 

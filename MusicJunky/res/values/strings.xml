@@ -9,7 +9,7 @@
     <string name="more_options">More Options</string>
     
     <string name="album_art">Album Art</string>
-    
+      
     <!-- Media Controls -->
 	<string name="action_play_pause">Play or Pause</string>
 	<string name="action_previous">Previous</string>
