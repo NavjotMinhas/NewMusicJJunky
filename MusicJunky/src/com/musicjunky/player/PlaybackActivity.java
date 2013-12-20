@@ -40,6 +40,7 @@ public class PlaybackActivity extends Activity {
 	private TextView mSongTitle;
 	private TextView mArtistName;
 	private TextView mCurrentPosition;
+	private TextView mBigCurrentPosition;
 	private TextView mEndPosition;
 	
 	private ImageView mAlbumArt;
@@ -92,6 +93,8 @@ public class PlaybackActivity extends Activity {
 		mArtistName.setTypeface(font);
 
 		mCurrentPosition = (TextView) findViewById(R.id.currentPos);
+		mBigCurrentPosition=(TextView)findViewById(R.id.big_song_pos);
+		mBigCurrentPosition.setTypeface(font);
 		mEndPosition = (TextView) findViewById(R.id.endPos);
 
 		mAlbumArt = (ImageView) findViewById(R.id.album_art);
@@ -188,9 +191,11 @@ public class PlaybackActivity extends Activity {
 				try {
 					if(mPlaybackService.isPlaying()){
 						mPlaybackService.pause();
+						onUpdateButtons();
 						Log.e(TAG, "pause");
 					}else{
 						mPlaybackService.play();
+						onUpdateButtons();
 						Log.e(TAG, "play");
 					}
 				} catch (RemoteException e) {
@@ -199,6 +204,21 @@ public class PlaybackActivity extends Activity {
 			}
 		}
 	};
+	
+	private void onUpdateButtons(){
+		if(mPlaybackService!=null){
+			try {
+				if(mPlaybackService.isPlaying()){
+					mPlayPauseButton.setImageResource(R.drawable.pause);
+				}else{
+					mPlayPauseButton.setImageResource(R.drawable.play);
+				}
+			} catch (RemoteException e) {
+				Log.e(TAG,"RemoteException",e);
+			}
+		}
+	}
+	
 	
 	private boolean mUsingTouch;
 	
@@ -248,7 +268,10 @@ public class PlaybackActivity extends Activity {
 	};
 	
 	private void startPlayback(){
-		try {
+		if(mPlaybackService==null){
+			return;
+		}
+		try {			
 			File file=new File(Environment.getExternalStorageDirectory(),"test.m4a");
 			Uri.Builder builder=new Uri.Builder();
 			builder.path(file.getPath());
@@ -259,6 +282,7 @@ public class PlaybackActivity extends Activity {
 			long next=refreshNow();
 			queueNextRefresh(next);
 			updateInfo();
+			onUpdateButtons();
 		} catch (RemoteException e) {
 			Log.e(TAG,"RemoteException",e);
 		}
@@ -277,7 +301,7 @@ public class PlaybackActivity extends Activity {
 			Log.e(TAG,"RemoteException",e);
 		}
 	}
-	
+		
 	private long refreshNow(){
 		if(mPlaybackService==null){
 			return 500;
@@ -288,13 +312,16 @@ public class PlaybackActivity extends Activity {
 				int progress= (int)(1000 * pos/mDuration);
 				mSeekBar.setProgress(progress);
 				if(mPlaybackService.isPlaying()){
-					mCurrentPosition.setText(makeTimeString(mPlaybackService.position()));
+					String text=makeTimeString(mPlaybackService.position());
+					mCurrentPosition.setText(text);
+					mBigCurrentPosition.setText(text);
 					mCurrentPosition.setVisibility(View.VISIBLE);
 				}else{
-					mCurrentPosition.setVisibility(mCurrentPosition.getVisibility()==View.INVISIBLE?View.VISIBLE:View.INVISIBLE);
+					mCurrentPosition.setVisibility(View.VISIBLE);
 					return 500;
 				}
 			}else{
+				mBigCurrentPosition.setText("--:--");
 				mCurrentPosition.setText("--:--");
 				mSeekBar.setProgress(1000);
 			}
@@ -341,6 +368,11 @@ public class PlaybackActivity extends Activity {
 			}
 			mArtistName.setText(mPlaybackService.getArtistName());
 			long albumID=mPlaybackService.getAlbumId();
+			if(albumID!=-1){
+				
+			}else{
+				
+			}
 			mDuration=mPlaybackService.duration();
 			mEndPosition.setText(makeTimeString(mDuration));
 			mPosOverride=-1;

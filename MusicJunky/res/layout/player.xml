@@ -7,12 +7,12 @@
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="@drawable/header_background" >
+        android:background="#eae8e7" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true" >
 
             <TextView
                 android:id="@+id/song_title"
@@ -21,7 +21,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="You Make Me"
                 android:textColor="#afaeaf"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/artist_name"
@@ -40,17 +40,29 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/player_functions"
-        android:layout_below="@+id/titlebar"
-        android:background="@android:color/black" >
+        android:layout_below="@+id/titlebar" >
 
         <ImageView
             android:id="@+id/album_art"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:contentDescription="@string/album_art"
             android:src="@drawable/albumart"
-            android:contentDescription="@string/album_art" >
+            android:scaleType="centerCrop" >
         </ImageView>
+
+        <TextView
+            android:id="@+id/big_song_pos"
+            android:background="@drawable/main_timer"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/album_art"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-60dp"
+            android:textColor="@android:color/white"
+            android:textSize="36sp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -74,8 +86,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/secondary_media_controller"
-                android:src="@drawable/shuffle_inactive"
-                android:contentDescription="@string/action_shuffle" />
+                android:contentDescription="@string/action_shuffle"
+                android:src="@drawable/shuffle_inactive" />
 
             <ImageButton
                 android:id="@+id/favorites"
@@ -90,8 +102,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/secondary_media_controller"
-                android:src="@drawable/repeat_inactive"
-                android:contentDescription="@string/action_repeat" />
+                android:contentDescription="@string/action_repeat"
+                android:src="@drawable/repeat_inactive" />
         </LinearLayout>
 
         <RelativeLayout
@@ -143,7 +155,7 @@
             android:id="@+id/media_controller"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="@drawable/media_background" >
+            android:background="#eae8e7" >
 
             <ImageButton
                 android:id="@+id/play_btn"
@@ -154,8 +166,8 @@
                 android:layout_marginRight="25dp"
                 android:background="@drawable/circle_button"
                 android:contentDescription="@string/action_play_pause"
-                android:src="@drawable/play"
-                android:onClick="onPlayPause" />
+                android:onClick="onPlayPause"
+                android:src="@drawable/play" />
 
             <ImageButton
                 android:id="@+id/previous_btn"
