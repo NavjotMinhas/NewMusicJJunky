@@ -6,6 +6,6 @@ This project is simply a combination of a music player/video player and a downlo
 
 Screen shots of the video Player and the list view, it could use more shading and a darker title color =p, but other than that its much more simpler then the most of the players out there: 
 
-<img src="http://i189.photobucket.com/albums/z183/Navthwarrior/NewPlayerScreenshot.png" />
+<img src="http://i189.photobucket.com/albums/z183/Navthwarrior/Screenshot_2013-12-20-05-14-48.png" />
 
 <img src="http://i189.photobucket.com/albums/z183/Navthwarrior/NewListviewscreenshot.png" />
