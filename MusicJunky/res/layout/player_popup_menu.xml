@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <Button
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/show_queue_item"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="left"
+        android:padding="4dp"
+        android:text="@string/action_show_queue_list" />
+
+    <Button
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/clear_queue_item"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="left"
+        android:padding="4dp"
+        android:text="@string/action_clear_queue_list" />
+
+    <Button
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/add_to_playlist_item"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="left"
+        android:padding="4dp"
+        android:text="@string/action_add_playlist" />
+
+    <Button
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/go_to_arist"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="left"
+        android:padding="4dp"
+        android:text="@string/action_go_to_artist" />
+
+    <Button
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/go_to_album"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="left"
+        android:padding="4dp"
+        android:text="@string/action_go_to_album" />
+
+</LinearLayout>

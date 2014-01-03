@@ -15,7 +15,7 @@ public class ViewPageAdapter extends FragmentStatePagerAdapter implements OnPage
 
 	private final static String[] TABS_TITLE={"Song", "Artist", "Album"};
 	
-	private ArrayList<TabInfo> tabs=new ArrayList<TabInfo>();
+	private ArrayList<ListTab> tabs=new ArrayList<ListTab>();
 	
 	private ViewPager mViewPager;
 	
@@ -26,14 +26,14 @@ public class ViewPageAdapter extends FragmentStatePagerAdapter implements OnPage
 		this.mViewPager.setOnPageChangeListener(this);
 	}
 	
-	public void addTab(Bundle bundle, String title, SimpleCursorAdapter adapter){
-		TabInfo tabInfo=new TabInfo(bundle,title, adapter);
+	public void addTab(Bundle bundle, String title, SimpleCursorAdapter adapter, int type){
+		ListTab tabInfo=new ListTab(bundle,title, adapter, type);
 		tabs.add(tabInfo);
 	}
 	
 	@Override
 	public Fragment getItem(int pos) {
-		TabInfo tabInfo=tabs.get(pos);
+		ListTab tabInfo=tabs.get(pos);
 		return tabInfo.getFragment();
 	}
 

@@ -1,7 +1,22 @@
 <resources>
 
+   	<dimen name="page_margin">8dp</dimen>
+	
+	<dimen name="padding_4dp">4dp</dimen>
+	<dimen name="padding_8dp">8dp</dimen>
+    
     <dimen name="album_art_list_item_width">70dp</dimen>
 	<dimen name="album_art_list_item_height">70dp</dimen>
-     
+    
+	<!-- the grid items created by the main album and artist grid -->
+	<dimen name="grid_item_image_width">144dp</dimen>
+	<dimen name="grid_item_image_height">96dp</dimen>
+	
+	<dimen name="grid_item_title_height">48dp</dimen>
+	
+	<dimen name="grid_item_text_size">20sp</dimen>
+	
+	<!-- num of colums used in the grid view for the artists column -->
+	<integer name="num_of_cols">1</integer>
 </resources>
 

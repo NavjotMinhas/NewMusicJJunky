@@ -1,12 +1,8 @@
-package com.musicjunky.player;
+package com.musicjunky.fragment;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -14,8 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -32,28 +26,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.musicjunky.R;
-import com.musicjunky.fragment.PlayerPopupMenu;
 import com.musicjunky.player.android.IMediaPlaybackService;
 import com.musicjunky.player.android.MediaPlaybackService;
 
-public class PlaybackActivity extends Activity {
+public class PlaybackPlayerFragment extends Fragment {
 
 	private ImageButton mPlayPauseButton;
 	private ImageButton mPreviousButton;
 	private ImageButton mNextButton;
 	private ImageButton mRepeatButton;
-	private ImageButton mShuffleButton;
-	private ImageButton mShowMenuButton;
 	
 	private TextView mSongTitle;
 	private TextView mArtistName;
@@ -62,16 +50,12 @@ public class PlaybackActivity extends Activity {
 	private TextView mEndPosition;
 	
 	private ImageView mAlbumArt;
-	
-	private ListView mQueueList;
-	private QueueListAdapter mQueueListAdapter;
-	
+		
 	private SeekBar mSeekBar;
 	
 	private long mPosOverride;
 	private long mDuration;
 	private int mRepeatMode;
-	private int mShuffleMode;
 	
 	private Handler mHandler;
 	
@@ -81,7 +65,7 @@ public class PlaybackActivity extends Activity {
 	
 	private IMediaPlaybackService mPlaybackService;
 	
-	private final static String TAG = PlaybackActivity.class.getName();
+	private final static String TAG = PlaybackPlayerFragment.class.getName();
 	
 	private final static int REFRESH=0;
 	
@@ -93,55 +77,54 @@ public class PlaybackActivity extends Activity {
 		
 		@Override
 		public void handleMessage(Message msg) {
-			long refresh=PlaybackActivity.this.refreshNow();
+			long refresh=PlaybackPlayerFragment.this.refreshNow();
 			queueNextRefresh(refresh);
 		}
 		
 	}
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.player);
-		init();
-
 	}
-
-	private void init() {
-		Typeface font = Typeface.createFromAsset(getAssets(),
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view=inflater.inflate(R.layout.player_fragment, container, true);
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/robotolight.ttf");
 		
-		Typeface thinFont = Typeface.createFromAsset(getAssets(),
+		Typeface thinFont = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/robotothin.ttf");
 		
-		Typeface boldFont = Typeface.createFromAsset(getAssets(),
+		Typeface boldFont = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/robotobold.ttf");
 		
-		mPlayPauseButton=(ImageButton)findViewById(R.id.play_btn);
+		mPlayPauseButton=(ImageButton)view.findViewById(R.id.play_btn);
 		mPlayPauseButton.setOnClickListener(onPlayPauseListener);
 		
-		mSongTitle = (TextView) findViewById(R.id.song_title);
+		mSongTitle = (TextView) view.findViewById(R.id.song_title);
 		mSongTitle.setTypeface(font);
 
-		mArtistName = (TextView) findViewById(R.id.artist_name);
+		mArtistName = (TextView) view.findViewById(R.id.artist_name);
 		mArtistName.setTypeface(boldFont);
-
-		mBigCurrentPosition=(TextView)findViewById(R.id.big_song_pos);
-		mBigCurrentPosition.setTypeface(thinFont);
-		mCurrentPosition = (TextView) findViewById(R.id.currentPos);
-		mEndPosition = (TextView) findViewById(R.id.endPos);
-
-		mAlbumArt = (ImageView) findViewById(R.id.album_art);
 		
-		mSeekBar=(SeekBar)findViewById(R.id.media_seekbar);
+		mBigCurrentPosition=(TextView)view.findViewById(R.id.big_song_pos);
+		mBigCurrentPosition.setTypeface(thinFont);
+		mCurrentPosition = (TextView) view.findViewById(R.id.currentPos);
+		mEndPosition = (TextView) view.findViewById(R.id.endPos);
+		
+		mAlbumArt = (ImageView) view.findViewById(R.id.album_art);
+		
+		mSeekBar=(SeekBar)view.findViewById(R.id.media_seekbar);
 		mSeekBar.setMax(1000);
 		mSeekBar.setOnSeekBarChangeListener(mSeekListener);
 		
-		mPreviousButton=(ImageButton)findViewById(R.id.previous_btn);
+		mPreviousButton=(ImageButton)view.findViewById(R.id.previous_btn);
 		mPreviousButton.setOnClickListener(onPrevious);
 		
-		mNextButton=(ImageButton)findViewById(R.id.next_btn);
+		mNextButton=(ImageButton)view.findViewById(R.id.next_btn);
 		mNextButton.setOnClickListener(onNext);
 		
 		mHandler=new Handler();
@@ -151,72 +134,52 @@ public class PlaybackActivity extends Activity {
 		mLooper=mHandlerThread.getLooper();
 		mAsyncHandler=new AsyncHandler(mLooper);
 		
-		mRepeatButton=(ImageButton)findViewById(R.id.repeat_btn);
+		mRepeatButton=(ImageButton)view.findViewById(R.id.repeat_btn);
 		mRepeatButton.setOnClickListener(toggleRepeat);
-		
-		mShuffleButton=(ImageButton)findViewById(R.id.shuffle_btn);
-		mShuffleButton.setOnClickListener(toggleShuffle);
-		
-		mShowMenuButton=(ImageButton)findViewById(R.id.player_menu_btn);
-		mShowMenuButton.setOnClickListener(togglePlayerMenu);
-		
-		
-		int rotation=getResources().getConfiguration().orientation;
-		if(rotation==Configuration.ORIENTATION_LANDSCAPE){
-			mQueueList=(ListView)findViewById(R.id.queueList);
-		}
+				
+		return view;
 	}
-
+	
+	
 	@Override
-	protected void onStart() {
+	public void onStart() {
 		super.onStart();
-		getApplicationContext().startService(new Intent(getApplicationContext(),MediaPlaybackService.class));
-		if(getApplicationContext().bindService(new Intent(getApplicationContext(),MediaPlaybackService.class), connection, Service.BIND_AUTO_CREATE)){
+		
+		getActivity().getApplicationContext().startService(new Intent(getActivity().getApplicationContext(),MediaPlaybackService.class));
+		if(getActivity().getApplicationContext().bindService(new Intent(getActivity().getApplicationContext(),MediaPlaybackService.class), connection, Service.BIND_AUTO_CREATE)){
 			Log.e(TAG, "bind service");
 		}
 		IntentFilter filter=new IntentFilter();
 		filter.addAction(MediaPlaybackService.PLAYSTATE_CHANGED);
 		filter.addAction(MediaPlaybackService.META_CHANGED);
-		registerReceiver(songReceiver, filter);
+		getActivity().registerReceiver(songReceiver, filter);
 		updateInfo();
-		
-		if(mQueueList!=null && mPlaybackService!=null){
-			try {
-				long[] listOfItems=mPlaybackService.getQueue();
-				
-				//Fix this coding here because it is inefficient and slow
-				mQueueListAdapter=new QueueListAdapter(Arrays.asList(listOfItems).toArray(new Long[listOfItems.length]));
-				mQueueList.setAdapter(mQueueListAdapter);
-			} catch (RemoteException e) {
-				Log.e(TAG,"RemoteException",e);
-			}
-		}
 	}
 	
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		super.onPause();
 	}
 	
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 	}
 	
 	@Override
-	protected void onStop() {
+	public void onStop() {
 		super.onStop();
 		if(mPlaybackService!=null){
-			getApplicationContext().unbindService(connection);
+			getActivity().getApplicationContext().unbindService(connection);
 		}
 		mPlaybackService=null;
 		if(songReceiver!=null){
-			unregisterReceiver(songReceiver);
+			getActivity().unregisterReceiver(songReceiver);
 		}
 	}
 	
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		super.onDestroy();
 		mLooper.quit();
 	}
@@ -292,38 +255,7 @@ public class PlaybackActivity extends Activity {
 			}
 		}
 	};
-	
-	private View.OnClickListener toggleShuffle=new View.OnClickListener() {
 		
-		private int shuffleCounter=0;
-		
-		@Override
-		public void onClick(View v) {
-			if(mPlaybackService!=null){
-				try {
-					shuffleCounter++;
-					mShuffleMode=shuffleCounter%3;
-					mPlaybackService.setShuffleMode(mShuffleMode);
-					switch(mShuffleMode){
-						case MediaPlaybackService.SHUFFLE_NONE:
-							mShuffleButton.setBackgroundColor(getResources().getColor(R.color.secondary_media_controller));
-							break;
-						case MediaPlaybackService.SHUFFLE_NORMAL:
-							mShuffleButton.setBackgroundColor(Color.parseColor("#f7912a"));
-							break;
-						case MediaPlaybackService.SHUFFLE_AUTO:
-							mShuffleButton.setBackgroundColor(Color.parseColor("#f7912a"));
-							break;
-					}
-					
-				} catch (RemoteException e) {
-					Log.e(TAG,"RemoteException",e);
-				}
-			}
-			
-		}
-	};
-	
 	private View.OnClickListener toggleRepeat=new View.OnClickListener() {
 		
 		private int repeatCounter=0;
@@ -353,21 +285,7 @@ public class PlaybackActivity extends Activity {
 			
 		}
 	};
-	
-	private View.OnClickListener togglePlayerMenu=new View.OnClickListener() {
 		
-		@Override
-		public void onClick(View v) {
-			if(PlayerPopupMenu.VISIBILE){
-				removeDialog();
-				PlayerPopupMenu.VISIBILE=false;
-			}else{
-				showDialog();
-				PlayerPopupMenu.VISIBILE=true;
-			}
-		}
-	};
-	
 	private void onUpdateButtons(){
 		if(mPlaybackService!=null){
 			try {
@@ -584,82 +502,4 @@ public class PlaybackActivity extends Activity {
 			return time;
 		}
 	}
-	
-	class QueueListAdapter extends ArrayAdapter<Long>{
-		
-		private Cursor cursor;
-		private ArrayList<String> titles;
-		private ArrayList<String> time; 
-		
-		public QueueListAdapter(Long[]id) {
-			super(getApplicationContext(),R.id.queue_item_title,id);
-			titles=new ArrayList<String>();
-			time=new ArrayList<String>();
-			for(int i=0;i<id.length;i++){
-				
-				cursor=getContentResolver().query(
-						MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, 
-						new String[]{MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DURATION}, 
-						MediaStore.Audio.Media._ID+" = ?", new String[]{id[i]+""}, null);
-				titles.add(cursor.getColumnName(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
-				time.add(cursor.getColumnName(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
-				cursor.close();
-			}
-		}
-		
-		public void add(Long l){
-			super.add(l);
-			cursor=getContentResolver().query(
-					MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, 
-					new String[]{MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DURATION}, 
-					MediaStore.Audio.Media._ID+" = ?", new String[]{l+""}, null);
-			titles.add(cursor.getColumnName(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
-			time.add(cursor.getColumnName(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
-			cursor.close();
-		}
-		
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			QueueListTag tag;
-			if(convertView==null){
-				LayoutInflater inflater=(LayoutInflater)getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-				convertView=(View)inflater.inflate(R.layout.queue_list_item, parent);
-				tag=new QueueListTag();
-				tag.titleTextView=(TextView)convertView.findViewById(R.id.queue_item_title);
-				convertView.setTag(tag);
-				
-			}else{
-				tag=(QueueListTag)convertView.getTag();
-			}
-			
-			tag.titleTextView.setText(titles.get(position));
-			return convertView;
-		}
-		
-	}
-	private static class QueueListTag{
-		private TextView titleTextView;
-	}
-	
-	private void showDialog(){
-		FragmentTransaction ft=getFragmentManager().beginTransaction();
-		Fragment prev=getFragmentManager().findFragmentByTag("PlayerDialog");
-		if(prev!=null){
-			ft.remove(prev);
-		}
-		PlayerPopupMenu menu=PlayerPopupMenu.newInstance(null);
-		ft.add(menu, "PlayerDialog");
-		ft.commit();
-		
-	}
-	
-	private void removeDialog(){
-		FragmentTransaction ft=getFragmentManager().beginTransaction();
-		Fragment prev=getFragmentManager().findFragmentByTag("PlayerDialog");
-		if(prev!=null){
-			ft.remove(prev);
-		}
-		ft.commit();
-	}
-	
 }

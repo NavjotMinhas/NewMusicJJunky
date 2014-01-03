@@ -102,5 +102,10 @@
         <item name="popupMenuStyle">@style/PopupMenu.Theme_orange</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Theme_orange</item>
     </style>
-
+    
+    <style name="PlayerMenu.Theme_orange" parent="@android:style/Theme.Holo.Dialog" >
+		<item name="android:windowIsFloating">true</item>
+    	<item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    
 </resources>

@@ -5,14 +5,14 @@ import android.widget.SimpleCursorAdapter;
 
 import com.musicjunky.fragment.PageFragment;
 
-public class TabInfo {
+public class ListTab {
 
 	private	PageFragment fragment;
 	private Bundle bundle;
 	private String title;
 	
-	public TabInfo(Bundle bundle, String title, SimpleCursorAdapter adapter) {
-		this.fragment=PageFragment.newInstance(bundle, adapter);
+	public ListTab(Bundle bundle, String title, SimpleCursorAdapter adapter, int type) {
+		this.fragment=PageFragment.newInstance(bundle, adapter, type);
 		this.bundle=bundle;
 		this.title=title;
 	}

@@ -20,5 +20,12 @@
 	<!-- menu -->
 	<string name="action_search">Search</string>
 	<string name="action_equalizer">Equalizer</string>
-    
+	
+	<!-- player menu -->
+	<string name="action_show_queue_list">Show Queue</string>
+    <string name="action_clear_queue_list">Clear Queue</string>
+    <string name="action_add_playlist">Add to Playlist</string>
+    <string name="action_go_to_artist">Go to Artist</string>
+    <string name="action_go_to_album">Go to Album</string>
+	
 </resources>

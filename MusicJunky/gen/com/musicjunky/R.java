@@ -1118,9 +1118,9 @@ containing a value of this type.
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f08001e;
-        public static final int album_art_list_item_height=0x7f08001d;
-        public static final int album_art_list_item_width=0x7f08001c;
+        public static final int activity_horizontal_margin=0x7f080025;
+        public static final int album_art_list_item_height=0x7f080020;
+        public static final int album_art_list_item_width=0x7f08001f;
         public static final int default_circle_indicator_radius=0x7f080000;
         public static final int default_circle_indicator_stroke_width=0x7f080001;
         public static final int default_line_indicator_gap_width=0x7f080003;
@@ -1134,6 +1134,15 @@ containing a value of this type.
         public static final int default_title_indicator_text_size=0x7f08000a;
         public static final int default_title_indicator_title_padding=0x7f08000b;
         public static final int default_title_indicator_top_padding=0x7f08000c;
+        public static final int grid_item_image_height=0x7f080022;
+        /**  the grid items created by the main album and artist grid 
+         */
+        public static final int grid_item_image_width=0x7f080021;
+        public static final int grid_item_text_size=0x7f080024;
+        public static final int grid_item_title_height=0x7f080023;
+        public static final int padding_4dp=0x7f08001d;
+        public static final int padding_8dp=0x7f08001e;
+        public static final int page_margin=0x7f08001c;
     }
     public static final class drawable {
         public static final int ab_background_textured_theme_orange=0x7f020000;
@@ -1264,51 +1273,55 @@ containing a value of this type.
         public static final int cab_background_top_theme_orange=0x7f02007d;
         public static final int circle_button=0x7f02007e;
         public static final int fallback_cover=0x7f02007f;
-        public static final int ic_action_headphones=0x7f020080;
-        public static final int ic_action_search=0x7f020081;
-        public static final int ic_action_settings=0x7f020082;
-        public static final int ic_launcher=0x7f020083;
-        public static final int ic_menu_moreoverflow_normal_holo_light=0x7f020084;
-        public static final int list_focused_theme_orange=0x7f020085;
-        public static final int main_timer=0x7f020086;
-        public static final int media_button_secondary=0x7f020087;
-        public static final int menu_dropdown_panel_theme_orange=0x7f020088;
-        public static final int next=0x7f020089;
-        public static final int pause=0x7f02008a;
-        public static final int play=0x7f02008b;
-        public static final int player_background=0x7f02008c;
-        public static final int pressed_background_theme_orange=0x7f02008d;
-        public static final int previous=0x7f02008e;
-        public static final int progress_bg_theme_orange=0x7f02008f;
-        public static final int progress_horizontal_theme_orange=0x7f020090;
-        public static final int progress_primary_theme_orange=0x7f020091;
-        public static final int progress_secondary_theme_orange=0x7f020092;
-        public static final int repeat_inactive=0x7f020093;
-        public static final int seekbar_background=0x7f020094;
-        public static final int seekbar_progress=0x7f020095;
-        public static final int seekbar_thumb=0x7f020096;
-        public static final int selectable_background_theme_orange=0x7f020097;
-        public static final int shuffle_inactive=0x7f020098;
-        public static final int spinner_ab_default_theme_orange=0x7f020099;
-        public static final int spinner_ab_disabled_theme_orange=0x7f02009a;
-        public static final int spinner_ab_focused_theme_orange=0x7f02009b;
-        public static final int spinner_ab_pressed_theme_orange=0x7f02009c;
-        public static final int spinner_background_ab_theme_orange=0x7f02009d;
-        public static final int tab_indicator_ab_theme_orange=0x7f02009e;
-        public static final int tab_selected_focused_theme_orange=0x7f02009f;
-        public static final int tab_selected_pressed_theme_orange=0x7f0200a0;
-        public static final int tab_selected_theme_orange=0x7f0200a1;
-        public static final int tab_unselected_focused_theme_orange=0x7f0200a2;
-        public static final int tab_unselected_pressed_theme_orange=0x7f0200a3;
-        public static final int tab_unselected_theme_orange=0x7f0200a4;
-        public static final int title_bar=0x7f0200a5;
-        public static final int vpi__tab_indicator=0x7f0200a6;
-        public static final int vpi__tab_selected_focused_holo=0x7f0200a7;
-        public static final int vpi__tab_selected_holo=0x7f0200a8;
-        public static final int vpi__tab_selected_pressed_holo=0x7f0200a9;
-        public static final int vpi__tab_unselected_focused_holo=0x7f0200aa;
-        public static final int vpi__tab_unselected_holo=0x7f0200ab;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f0200ac;
+        public static final int ic_action_collapse=0x7f020080;
+        public static final int ic_action_edit=0x7f020081;
+        public static final int ic_action_headphones=0x7f020082;
+        public static final int ic_action_search=0x7f020083;
+        public static final int ic_action_settings=0x7f020084;
+        public static final int ic_launcher=0x7f020085;
+        public static final int ic_menu_moreoverflow_normal_holo_light=0x7f020086;
+        public static final int list_focused_theme_orange=0x7f020087;
+        public static final int media_button_secondary=0x7f020088;
+        public static final int menu_dropdown_panel_theme_orange=0x7f020089;
+        public static final int next=0x7f02008a;
+        public static final int pause=0x7f02008b;
+        public static final int play=0x7f02008c;
+        public static final int player_background=0x7f02008d;
+        public static final int player_header_background=0x7f02008e;
+        public static final int pressed_background_theme_orange=0x7f02008f;
+        public static final int previous=0x7f020090;
+        public static final int progress_bg_theme_orange=0x7f020091;
+        public static final int progress_horizontal_theme_orange=0x7f020092;
+        public static final int progress_primary_theme_orange=0x7f020093;
+        public static final int progress_secondary_theme_orange=0x7f020094;
+        public static final int repeat_inactive=0x7f020095;
+        public static final int seekbar_background=0x7f020096;
+        public static final int seekbar_progress=0x7f020097;
+        public static final int seekbar_thumb=0x7f020098;
+        public static final int selectable_background_theme_orange=0x7f020099;
+        public static final int shuffle_inactive=0x7f02009a;
+        public static final int spinner_ab_default_theme_orange=0x7f02009b;
+        public static final int spinner_ab_disabled_theme_orange=0x7f02009c;
+        public static final int spinner_ab_focused_theme_orange=0x7f02009d;
+        public static final int spinner_ab_pressed_theme_orange=0x7f02009e;
+        public static final int spinner_background_ab_theme_orange=0x7f02009f;
+        public static final int tab_indicator_ab_theme_orange=0x7f0200a0;
+        public static final int tab_selected_focused_theme_orange=0x7f0200a1;
+        public static final int tab_selected_pressed_theme_orange=0x7f0200a2;
+        public static final int tab_selected_theme_orange=0x7f0200a3;
+        public static final int tab_unselected_focused_theme_orange=0x7f0200a4;
+        public static final int tab_unselected_pressed_theme_orange=0x7f0200a5;
+        public static final int tab_unselected_theme_orange=0x7f0200a6;
+        public static final int title_bar=0x7f0200a7;
+        public static final int transparent_black_gradient=0x7f0200a8;
+        public static final int vpi__tab_indicator=0x7f0200a9;
+        public static final int vpi__tab_selected_focused_holo=0x7f0200aa;
+        public static final int vpi__tab_selected_holo=0x7f0200ab;
+        public static final int vpi__tab_selected_pressed_holo=0x7f0200ac;
+        public static final int vpi__tab_unselected_focused_holo=0x7f0200ad;
+        public static final int vpi__tab_unselected_holo=0x7f0200ae;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f0200af;
+        public static final int white_divider=0x7f0200b0;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040025;
@@ -1350,47 +1363,62 @@ containing a value of this type.
         public static final int abs__textButton=0x7f040018;
         public static final int abs__title=0x7f040020;
         public static final int abs__up=0x7f040010;
-        public static final int action_settings=0x7f040054;
-        public static final int album_art=0x7f040044;
-        public static final int album_art_layout=0x7f040042;
-        public static final int album_art_list_item=0x7f04003b;
-        public static final int artist_name=0x7f040041;
-        public static final int artist_name_list_item=0x7f04003d;
-        public static final int big_song_pos=0x7f040045;
+        public static final int action_settings=0x7f040063;
+        public static final int add_to_playlist_item=0x7f04005b;
+        public static final int album_art=0x7f040048;
+        public static final int album_art_layout=0x7f040046;
+        public static final int album_art_list_item=0x7f040041;
+        public static final int album_title=0x7f04003d;
+        public static final int artist_name=0x7f04003e;
+        public static final int artist_name_list_item=0x7f040043;
+        public static final int big_song_pos=0x7f040049;
         public static final int bottom=0x7f040003;
-        public static final int currentPos=0x7f040049;
+        public static final int clear_queue_item=0x7f04005a;
+        public static final int currentPos=0x7f04004f;
+        public static final int description=0x7f04003f;
         public static final int disableHome=0x7f04000e;
         public static final int drawer_layout=0x7f040037;
         public static final int edit_query=0x7f04002b;
-        public static final int endPos=0x7f04004a;
-        public static final int favorites=0x7f040047;
+        public static final int edit_song=0x7f040058;
+        public static final int endPos=0x7f040050;
+        public static final int favorites=0x7f040056;
+        public static final int go_to_album=0x7f04005d;
+        public static final int go_to_arist=0x7f04005c;
+        public static final int grid=0x7f040040;
         public static final int homeAsUp=0x7f04000b;
         public static final int indicator=0x7f040038;
-        public static final int left_drawer=0x7f04003a;
+        public static final int item_image=0x7f04003c;
+        public static final int left_drawer=0x7f04003b;
+        public static final int list=0x7f040045;
         public static final int listMode=0x7f040007;
-        public static final int media_controller=0x7f04004c;
-        public static final int media_seekbar=0x7f04004b;
-        public static final int menu_equalizer=0x7f040052;
-        public static final int menu_list_item=0x7f04003e;
-        public static final int menu_search=0x7f040053;
-        public static final int menu_toggle=0x7f040050;
-        public static final int next_btn=0x7f04004f;
+        public static final int media_controller=0x7f040052;
+        public static final int media_seekbar=0x7f040051;
+        public static final int menu_equalizer=0x7f040061;
+        public static final int menu_list_item=0x7f040044;
+        public static final int menu_search=0x7f040062;
+        public static final int menu_toggle=0x7f04005f;
+        public static final int next_btn=0x7f040055;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040006;
         public static final int pager=0x7f040039;
-        public static final int play_btn=0x7f04004d;
-        public static final int player_functions=0x7f040043;
-        public static final int previous_btn=0x7f04004e;
-        public static final int repeat=0x7f040048;
-        public static final int search=0x7f040051;
+        public static final int play_btn=0x7f040053;
+        public static final int playerFragment=0x7f04003a;
+        public static final int player_functions=0x7f040047;
+        public static final int player_menu_btn=0x7f04004d;
+        public static final int previous_btn=0x7f040054;
+        public static final int queueList=0x7f040057;
+        public static final int queue_item_title=0x7f04005e;
+        public static final int repeat_btn=0x7f04004e;
+        public static final int search=0x7f040060;
         public static final int showCustom=0x7f04000d;
         public static final int showHome=0x7f04000a;
         public static final int showTitle=0x7f04000c;
-        public static final int shuffle=0x7f040046;
-        public static final int song_title=0x7f040040;
-        public static final int song_title_list_item=0x7f04003c;
+        public static final int show_queue_item=0x7f040059;
+        public static final int shuffle_btn=0x7f04004c;
+        public static final int song_title=0x7f04004b;
+        public static final int song_title_list_item=0x7f040042;
         public static final int tabMode=0x7f040008;
-        public static final int titlebar=0x7f04003f;
+        public static final int titlebar=0x7f04004a;
         public static final int top=0x7f040004;
         public static final int triangle=0x7f040001;
         public static final int underline=0x7f040002;
@@ -1404,6 +1432,10 @@ containing a value of this type.
         public static final int default_title_indicator_line_position=0x7f070002;
         public static final int default_underline_indicator_fade_delay=0x7f070003;
         public static final int default_underline_indicator_fade_length=0x7f070004;
+        /**  num of colums used in the grid view for the artists column 
+ num of colums used in the grid view for the artists and album column 
+         */
+        public static final int num_of_cols=0x7f070006;
     }
     public static final class layout {
         public static final int abs__action_bar_home=0x7f030000;
@@ -1427,13 +1459,20 @@ containing a value of this type.
         public static final int abs__search_dropdown_item_icons_2line=0x7f030012;
         public static final int abs__search_view=0x7f030013;
         public static final int abs__simple_dropdown_hint=0x7f030014;
-        public static final int activity_main=0x7f030015;
-        public static final int activity_navbar=0x7f030016;
-        public static final int list_item=0x7f030017;
-        public static final int player=0x7f030018;
-        public static final int sherlock_spinner_dropdown_item=0x7f030019;
-        public static final int sherlock_spinner_item=0x7f03001a;
-        public static final int title_bar=0x7f03001b;
+        public static final int activity_browser=0x7f030015;
+        public static final int activity_main=0x7f030016;
+        public static final int activity_navbar=0x7f030017;
+        public static final int grid_item=0x7f030018;
+        public static final int grid_tab=0x7f030019;
+        public static final int list_item=0x7f03001a;
+        public static final int list_tab=0x7f03001b;
+        public static final int player=0x7f03001c;
+        public static final int player_fragment=0x7f03001d;
+        public static final int player_popup_menu=0x7f03001e;
+        public static final int queue_list_item=0x7f03001f;
+        public static final int sherlock_spinner_dropdown_item=0x7f030020;
+        public static final int sherlock_spinner_item=0x7f030021;
+        public static final int title_bar=0x7f030022;
     }
     public static final class menu {
         public static final int action_bar_menu=0x7f0b0000;
@@ -1479,7 +1518,11 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0007;
+        public static final int action_add_playlist=0x7f0a001b;
+        public static final int action_clear_queue_list=0x7f0a001a;
         public static final int action_equalizer=0x7f0a0018;
+        public static final int action_go_to_album=0x7f0a001d;
+        public static final int action_go_to_artist=0x7f0a001c;
         public static final int action_navigation=0x7f0a000f;
         public static final int action_next=0x7f0a0014;
         /**  Media Controls 
@@ -1491,6 +1534,9 @@ containing a value of this type.
          */
         public static final int action_search=0x7f0a0017;
         public static final int action_settings=0x7f0a000e;
+        /**  player menu 
+         */
+        public static final int action_show_queue_list=0x7f0a0019;
         public static final int action_shuffle=0x7f0a0015;
         public static final int album_art=0x7f0a0011;
         public static final int app_name=0x7f0a000d;
@@ -1538,6 +1584,7 @@ containing a value of this type.
         public static final int AppTheme=0x7f09005e;
         public static final int DropDownListView_Theme_orange=0x7f090068;
         public static final int DropDownNav_Theme_orange=0x7f09006a;
+        public static final int PlayerMenu_Theme_orange=0x7f09006e;
         public static final int PopupMenu_Theme_orange=0x7f090067;
         public static final int ProgressBar_Theme_orange=0x7f09006b;
         public static final int Sherlock___TextAppearance_Small=0x7f09004a;
