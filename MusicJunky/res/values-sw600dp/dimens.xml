@@ -1,7 +1,0 @@
-<resources>
-    
-    <dimen name="page_margin">16dp</dimen>
-    
-    <!-- num of colums used in the grid view for the artists and album column -->
-    <integer name="num_of_cols">2</integer>
-</resources>
